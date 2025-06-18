@@ -183,7 +183,7 @@ Mot de passe du modérateur : moderateur
 
 ## 📘 License & Attributions
 
-Projet développé par LOPRIN Maxime, ZEMMAR Safaa et HADDAD Ilyes dans le cadre d’un exercice à Val d'Europe Ynov Campus - 2025   
+Projet développé par LOPRIN Maxime dans le cadre d’un exercice à Val d'Europe Ynov Campus - 2025   
 
 This project uses the Google Gemini API.  
 © 2024 Google LLC. All rights reserved.  
