@@ -1,0 +1,168 @@
+@import url('/static/css/main.css');
+
+.notifications-page {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.notifications-page header {
+  position: relative;
+  background: transparent !important;
+  color: #fff !important;
+  padding: 20px !important;
+  text-align: center !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+.notifications-page header h1 {
+  margin: 0 !important;
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.5rem) !important;
+}
+
+.notifications-page .btn {
+  display: inline-block !important;
+  padding: 8px 16px !important;
+  background-color: var(--secondary) !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: var(--radius) !important;
+  font-weight: bold !important;
+  transition: background-color var(--transition) !important;
+}
+.notifications-page .btn:hover {
+  background-color: var(--accent) !important;
+}
+
+.notifications-page #theme-toggle,
+.notifications-page #notif-link,
+.notifications-page #profil-link {
+  position: absolute !important;
+  top: 20px !important;
+  display: inline-block !important;
+  transition: transform 0.2s ease !important;
+  color: #fff !important;
+}
+.notifications-page #theme-toggle {
+  right: 20px !important;
+  font-size: 1.5rem !important;
+}
+.notifications-page #notif-link {
+  right: 70px !important;
+}
+.notifications-page #profil-link {
+  right: 120px !important;
+}
+.notifications-page #theme-toggle:hover,
+.notifications-page #notif-link:hover,
+.notifications-page #profil-link:hover {
+  transform: scale(1.1) !important;
+}
+.notifications-page #notif-link img,
+.notifications-page #profil-link img {
+  width: 40px !important;
+  height: 40px !important;
+  display: block !important;
+}
+.notifications-page #profil-link img {
+  border-radius: 50% !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.notifications-page main.container {
+  max-width: 800px !important;
+  margin: 2rem auto !important;
+  padding: var(--spacing) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: var(--radius) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.notifications-page .notification-list {
+  margin-top: var(--spacing) !important;
+}
+
+.notifications-page .notification-item {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  border-radius: var(--radius) !important;
+  padding: 15px !important;
+  margin-bottom: 10px !important;
+}
+.notifications-page .notification-item h3 {
+  margin: 0 0 5px !important;
+  font-size: 1rem !important;
+  color: var(--primary) !important;
+}
+.notifications-page .notification-item a {
+  color: var(--secondary) !important;
+  text-decoration: none !important;
+}
+.notifications-page .notification-item a:hover {
+  text-decoration: underline !important;
+}
+.notifications-page .notification-item time {
+  font-size: 0.8rem !important;
+  color: var(--text-light) !important;
+}
+
+.notifications-page .notification-list p {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  border-radius: var(--radius) !important;
+  padding: 15px !important;
+  margin-bottom: 10px !important;
+  color: var(--text-light) !important;
+}
+
+.notifications-page footer {
+  background: var(--primary) !important;
+  color: #fff !important;
+  text-align: center !important;
+  padding: 10px !important;
+  margin-top: 20px !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+}
+
+@media (max-width: 768px) {
+  .notifications-page main.container {
+    max-width: calc(100% - 2rem) !important;
+    margin: 1rem auto !important;
+  }
+  .notifications-page header nav {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .notifications-page #theme-toggle,
+  .notifications-page #notif-link,
+  .notifications-page #profil-link {
+    position: static !important;
+    margin: 0.5rem !important;
+  }
+}
+
+.notifications-page,
+.notifications-page * {
+  color: #fff !important;
+}
+
+.notifications-page .notification-item h3,
+.notifications-page .notification-item a {
+  color: #fff !important;
+}
+
+.notifications-page .notification-item a:hover {
+  color: #fff !important;
+  text-decoration: underline !important;
+}

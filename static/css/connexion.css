@@ -1,0 +1,124 @@
+@import url('/static/css/main.css');
+
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    padding: var(--spacing);
+}
+
+.auth-form {
+    background: rgba(255, 255, 255, 0.15); 
+
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 500px;
+    color: #fff;
+}
+
+.auth-form h2 {
+    margin-bottom: 1rem;
+    color: #fff;
+    text-align: center;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+}
+
+.auth-form label {
+    display: block;
+    margin: 1rem 0 0.25rem;
+    font-weight: 500;
+
+    color: #fff;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--transition);
+    background: rgba(255, 255, 255, 0.25); 
+    color: #fff;
+}
+
+.auth-form input[type="text"]::placeholder,
+.auth-form input[type="email"]::placeholder,
+.auth-form input[type="password"]::placeholder {
+    color: #ddd;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+    border-color: var(--accent);
+}
+
+.auth-form .btn-submit {
+    margin-top: 1.5rem;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.auth-form .link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-form .link:hover {
+    text-decoration: underline;
+}
+
+.oauth-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.oauth-container p.oauth-title {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+.oauth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.oauth-buttons a img {
+    height: 40px;   
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s;
+    display: block;
+}
+
+.oauth-buttons a.btn-google img,
+.oauth-buttons a.btn-facebook img {
+    height: 20px;
+    width: auto;
+}
+
+.oauth-buttons a.btn-github img,
+.oauth-buttons a.btn-twitter img {
+    height: 28px;
+    width: auto;
+}
+
+.oauth-buttons a:hover img {
+    transform: scale(1.1);
+}

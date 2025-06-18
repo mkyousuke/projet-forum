@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - CinéForum</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/notifications.css">
+  </head>
+  <body class="notifications-page">
+    <header>
+      <h1>Vos notifications</h1>
+      <a href="/index" class="btn">Accueil</a>
+    </header>
+    <main class="container">
+      <div class="notification-list">
+        {{ if . }}
+          {{ range . }}
+            <div class="notification-item">
+              <h3>{{.Message}} – <a href="{{.PostLink}}">Voir le post</a></h3>
+              <time>{{.CreatedAt.Format "02/01/2006 15:04:05"}}</time>
+            </div>
+          {{ end }}
+        {{ else }}
+          <p>Aucune notification pour le moment.</p>
+        {{ end }}
+      </div>
+      <form action="/notifications/mark-read" method="post">
+        <button type="submit" class="btn">Vider la boîte de notifications</button>
+      </form>
+    </main>
+  </body>
+</html>

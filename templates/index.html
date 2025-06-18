@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>CinéForum – Discussions sur les films et séries</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+  <header class="index-header">
+      <div class="header-container">
+          <div class="header-main">
+              <h1 class="site-title">CinéForum</h1>
+              <p class="site-subtitle">La communauté des passionnés de séries et films</p>
+          </div>
+          <nav class="header-nav">
+               <a href="/notifications-page" id="notif-link" class="icon-link" title="Notifications">
+                   <img src="/static/images/pas_de_notif.png" alt="Notifications">
+               </a>
+                <a href="{{ if .IsLoggedIn }}/profil{{ else }}/connexion{{ end }}"
+                   id="profil-link"
+                   class="profile-link {{ if not .IsLoggedIn }}btn btn-outline{{ end }}"
+                   title="Profil / Connexion">
+                  {{ if .IsLoggedIn }}
+                    <img src="{{ .PhotoURL }}" alt="Profil" class="profile-avatar-small">
+                  {{ else }}
+                    {{/* SVG Icon retiré */}}
+                    <span class="profile-link-text">Profil</span>
+                  {{ end }}
+                </a>
+          </nav>
+      </div>
+  </header>
+
+  <main class="index-container">
+    <section class="welcome-section">
+        <div class="welcome-header">
+          <h2>Bienvenue sur CinéForum !</h2>
+          <div class="auth-actions">
+            {{ if .IsLoggedIn }}
+              <a href="/nouveau-post" class="btn btn-primary">Nouveau post</a>
+              <a href="/gemini-chat" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Accéder à l'IA</a>
+            {{ else }}
+              <a href="/connexion" class="btn btn-primary">Connexion</a>
+              <a href="/inscription" class="btn btn-secondary">Inscription</a>
+              <a href="/connexion" class="btn btn-accent" title="Accès à l'IA (connexion requise)">IA (Connexion)</a>
+            {{ end }}
+          </div>
+        </div>
+        <p class="welcome-text">
+          Rejoignez notre communauté pour discuter de vos films et séries préférés, partager vos critiques, débattre des dernières sorties et découvrir de nouvelles pépites !
+        </p>
+    </section>
+
+    <section class="explore-section">
+      <h2>Explorer</h2>
+      <div class="category-grid">
+        <a href="/posts" class="category-card">
+          <div class="card-icon">📄</div>
+          <h3>Posts</h3>
+          <p>Parcourir les discussions des utilisateurs.</p>
+        </a>
+        <a href="/actualites" class="category-card">
+           <div class="card-icon">📰</div>
+           <h3>Actualités</h3>
+           <p>Les dernières informations cinéma et séries.</p>
+        </a>
+        <a href="/api-tmdb" class="category-card">
+           <div class="card-icon">⭐</div>
+           <h3>Films Populaires</h3>
+           <p>Tendances actuelles via The Movie Database.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="recent-posts-section">
+      <h2>Dernières Discussions</h2>
+      <div class="recent-posts-grid">
+        {{ if .RecentPosts }}
+          {{ range .RecentPosts }}
+            <article class="post-card">
+              <div class="post-card-content">
+                <h3><a href="/post?id={{ .ID }}" class="post-title">{{ .Title }}</a></h3>
+                <div class="post-meta">
+                    <span class="post-author">par {{ .Username }}</span>
+                    <time class="post-date" datetime="{{ .CreatedAt.Format "2006-01-02T15:04:05Z07:00" }}">
+                      {{ .CreatedAt.Format "02 Jan 2006" }}
+                    </time>
+                </div>
+                <p class="post-excerpt">
+                  {{ $content := .Content }}
+                  {{ $maxLength := 120 }}
+                  {{ if gt (len $content) $maxLength }}
+                      {{ slice $content 0 $maxLength }}…
+                  {{ else }}
+                      {{ $content }}
+                  {{ end }}
+                </p>
+              </div>
+              <div class="post-card-footer">
+                 <a href="/post?id={{ .ID }}" class="btn btn-outline">Lire la suite</a>
+              </div>
+            </article>
+          {{ end }}
+        {{ else }}
+          <p class="no-posts-message">Aucune discussion récente pour le moment.</p>
+        {{ end }}
+      </div>
+       {{ if .RecentPosts }}
+       <div class="view-all-posts">
+           <a href="/posts" class="btn btn-secondary">Voir tous les posts</a>
+       </div>
+       {{ end }}
+    </section>
+  </main>
+
+  <footer class="index-footer">
+    <p>© 2025 CinéForum – Tous droits réservés</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const notifLink = document.getElementById('notif-link');
+      if (!notifLink) return;
+
+      const notifImg = notifLink.querySelector('img');
+      if (!notifImg) return;
+
+      function checkNotifications() {
+        fetch('/notifications')
+          .then(res => {
+              if (res.status === 401) return null;
+              if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+              return res.json();
+          })
+          .then(data => {
+            if (data && Array.isArray(data) && data.length > 0) {
+              notifImg.src = '/static/images/notif.png';
+              notifLink.classList.add('has-notifications');
+            } else if (data !== null) {
+              notifImg.src = '/static/images/pas_de_notif.png';
+              notifLink.classList.remove('has-notifications');
+            }
+          })
+          .catch(err => {
+              if (err.message.indexOf('401') === -1) {
+                 console.error('Erreur checkNotifications:', err);
+              }
+              notifImg.src = '/static/images/pas_de_notif.png';
+              notifLink.classList.remove('has-notifications');
+         });
+      }
+      checkNotifications();
+      setInterval(checkNotifications, 30000);
+    });
+  </script>
+</body>
+</html>

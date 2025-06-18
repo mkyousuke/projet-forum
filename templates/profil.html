@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil – {{.Username}} - CinéForum</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/profil.css">
+</head>
+<body>
+    <header class="profile-page-header">
+        <div class="header-content">
+            <h1>Profil Utilisateur</h1>
+            <nav>
+                <a href="/notifications-page" id="notif-link" class="icon-link" title="Notifications">
+                    <img src="/static/images/pas_de_notif.png" alt="Notifications">
+                </a>
+                <a href="/index" class="btn btn-secondary" title="Retour à l'accueil">Accueil</a>
+                <a href="/deconnexion" class="btn btn-danger" title="Se déconnecter">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="profile-main-content">
+        <section class="profile-card">
+
+            <div class="profile-card-header">
+                <div class="profile-picture-container">
+                    <img
+                        src="/static/images/profil/{{.Photo}}"
+                        alt="Photo de profil de {{.Username}}"
+                        class="profile-picture"
+                        onerror="this.onerror=null; this.src='/static/images/profil/default.png';"
+                    >
+                </div>
+                <div class="profile-summary">
+                    <h2 class="profile-username">{{.Username}}</h2>
+                    <p class="profile-email">{{.Email}}</p>
+                    <p class="profile-id">ID: {{.ID}}</p>
+                     <p class="profile-role">Rôle: <span class="role {{.Role}}">{{.Role}}</span></p>
+                    <a href="/modify-profil" class="btn btn-primary btn-edit-profile">
+                        Modifier Profil
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-card-body">
+                <h3>Informations et Activité</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Membre depuis</span>
+                        <span class="info-value">{{.CreatedAt}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Dernier post</span>
+                        <span class="info-value">{{if .LastPostDate}}{{.LastPostDate}}{{else}}Jamais{{end}}</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Dernière activité</span>
+                        <span class="info-value">{{if .LastActivityDate}}{{.LastActivityDate}}{{else}}Aucune{{end}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Dernière connexion</span>
+                         <span class="info-value">{{if .LastConnectionDate}}{{.LastConnectionDate}}{{else}}Inconnue{{end}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Posts Aimés</span>
+                        <span class="info-value">{{.PostsLiked}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Commentaires Postés</span>
+                        <span class="info-value">{{.CommentsCount}}</span>
+                    </div>
+                </div>
+            </div>
+
+            {{if eq .Role "admin"}}
+            <div class="profile-card-admin-actions">
+                <h3>Actions Administrateur</h3>
+                <div class="admin-buttons">
+                    <a href="/moderation" class="btn btn-warning">Modération Posts</a>
+                    <a href="/admin/users" class="btn btn-info">Gestion Utilisateurs</a>
+                    </div>
+                </div>
+            {{end}}
+
+        </section>
+    </main>
+
+    <footer class="profile-page-footer">
+        <p>© 2025 CinéForum – Tous droits réservés</p>
+    </footer>
+
+    <script>
+        const userPhotoFromTemplate = "{{.Photo}}";
+        let avatarUrlForChat = '/static/images/profil/default.png';
+        if (userPhotoFromTemplate && userPhotoFromTemplate !== "profil.png" && userPhotoFromTemplate !== "default.png") {
+            if (userPhotoFromTemplate.startsWith('http')) {
+                avatarUrlForChat = userPhotoFromTemplate;
+            } else if (userPhotoFromTemplate.includes('/')) {
+                if (userPhotoFromTemplate.startsWith('static/images/')) {
+                     avatarUrlForChat = '/' + userPhotoFromTemplate;
+                } else if (userPhotoFromTemplate.startsWith('/static/images/')) {
+                     avatarUrlForChat = userPhotoFromTemplate;
+                } else {
+                    avatarUrlForChat = '/static/images/profil/' + userPhotoFromTemplate;
+                }
+            } else {
+                avatarUrlForChat = '/static/images/profil/' + userPhotoFromTemplate;
+            }
+        }
+        localStorage.setItem('userAvatarUrl', avatarUrlForChat);
+    </script>
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const notifImg = document.querySelector('#notif-link img');
+          if (notifImg) {
+              function checkNotifications() {
+                fetch('/notifications')
+                  .then(res => {
+                      if (res.status === 401) {
+                           notifImg.src = '/static/images/pas_de_notif.png';
+                           return null;
+                      }
+                      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                      return res.json();
+                  })
+                  .then(data => {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                      notifImg.src = '/static/images/notif.png';
+                    } else if (data !== null) {
+                      notifImg.src = '/static/images/pas_de_notif.png';
+                    }
+                  })
+                  .catch(err => {
+                      console.error('Erreur checkNotifications:', err);
+                 });
+              }
+              checkNotifications();
+              setInterval(checkNotifications, 60000);
+           }
+        });
+      </script>
+
+</body>
+</html>

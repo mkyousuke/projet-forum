@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discussions - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/posts.css">
+</head>
+<body class="posts-page">
+<header class="posts-page-header">
+   <div class="header-content">
+       <h1>Discussions</h1>
+       <nav>
+            <a href="/nouveau-post" class="btn btn-primary">Nouveau Post</a>
+            {{ if .IsModerator }}
+                <a href="/moderation" class="btn btn-warning">Modération</a>
+            {{ end }}
+            <a href="/index" class="btn btn-secondary">Accueil</a>
+       </nav>
+   </div>
+</header>
+
+<main class="posts-container">
+  <div class="table-responsive-wrapper">
+      <table class="topic-list">
+        <thead>
+          <tr>
+            <th class="col-title">Titre</th>
+            <th class="col-author">Auteur</th>
+            <th class="col-categories">Catégories</th>
+            <th class="col-date">Date</th>
+            <th class="col-time">Heure</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ if .Posts }}
+            {{ range .Posts }}
+              <tr>
+                <td class="col-title">
+                  <a href="/post?id={{ .ID }}" class="post-title-link">{{ .Title }}</a>
+                </td>
+                <td class="col-author">
+                     {{ .Username }}
+                    </td>
+                <td class="col-categories">
+                  {{ range $i, $c := .Categories }}
+                    <span class="category-badge">{{ $c }}</span>
+                  {{ end }}
+                  {{ if not .Categories }}<span class="no-category">-</span>{{ end }}
+                </td>
+                <td class="col-date">{{ .CreatedAt.Format "02/01/2006" }}</td>
+                <td class="col-time">{{ .CreatedAt.Format "15:04:05" }}</td>
+              </tr>
+            {{ end }}
+          {{ else }}
+            <tr>
+              <td colspan="5" class="no-posts-row">Aucun post pour le moment. Créez le premier !</td>
+            </tr>
+          {{ end }}
+        </tbody>
+      </table>
+  </div>
+</main>
+
+<footer class="posts-page-footer">
+    <p>© 2025 CinéForum – Tous droits réservés</p>
+</footer>
+
+</body>
+</html>

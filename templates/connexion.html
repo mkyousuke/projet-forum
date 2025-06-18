@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Connexion - CineForum</title>
+  <link rel="stylesheet" href="/static/css/connexion.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <form class="auth-form" action="/connexion" method="post">
+      <h2>Connexion</h2>
+      
+      <label for="identifier">Email ou Nom d'utilisateur</label>
+      <input type="text" name="identifier" id="identifier" required>
+
+      <label for="password">Mot de passe</label>
+      <input type="password" name="password" id="password" required>
+
+      <button type="submit" class="btn btn-submit">Se connecter</button>
+
+      <a class="link" href="/inscription">Pas de compte ? Inscris-toi</a>
+
+      <div class="oauth-container">
+        <p class="oauth-title">Se connecter plutôt avec :</p>
+        <div class="oauth-buttons">
+          <a href="/auth/google" class="btn-google">
+            <img src="/static/images/logo-google.png" alt="Google">
+          </a>
+          <a href="/auth/facebook" class="btn-facebook">
+            <img src="/static/images/logo-facebook.png" alt="Facebook">
+          </a>
+          <a href="/auth/github" class="btn-github">
+            <img src="/static/images/logo-github.png" alt="GitHub">
+          </a>
+          <a href="/auth/twitter" class="btn-twitter">
+            <img src="/static/images/logo-twitter.png" alt="Twitter">
+          </a>
+        </div>
+      </div>
+
+      <a class="link" href="/">Revenir à l'accueil</a>
+    </form>
+  </div>
+</body>
+</html>

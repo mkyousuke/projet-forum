@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualités Cinéma & Séries - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/actualites.css">
+</head>
+<body class="actualites-page">
+
+<header class="actualites-header">
+    <div class="header-content">
+        <h1>Actualités Cinéma & Séries</h1>
+        <nav>
+            <a href="/index" class="btn btn-secondary">Accueil</a>
+        </nav>
+    </div>
+</header>
+
+<main class="actualites-container">
+    <div class="news-grid">
+    {{if .Articles}}
+        {{range .Articles}}
+        <article class="news-card">
+          {{ if .URLToImage }}
+          <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" class="news-image-link">
+            <img src="{{.URLToImage}}" alt="{{.Title}}" class="news-image" loading="lazy">
+          </a>
+          {{ end }}
+          <div class="news-content">
+              <h3 class="news-title">
+                  <a href="{{.URL}}" target="_blank" rel="noopener noreferrer">{{.Title}}</a>
+              </h3>
+              <div class="news-meta">
+                  <span class="news-source">{{ .Source.Name }}</span> -
+                  <time class="news-date" datetime="{{.PublishedAt}}">{{ .PublishedAt }}</time> {{/* Correction: Affichage direct */}}
+              </div>
+              <p class="news-description">{{.Description}}</p>
+              <a href="{{.URL}}" class="btn btn-outline btn-read-more" target="_blank" rel="noopener noreferrer">Lire la suite</a>
+          </div>
+        </article>
+        {{end}}
+     {{else}}
+        <p class="no-news">Aucune actualité disponible pour le moment.</p>
+     {{end}}
+    </div>
+</main>
+
+<footer class="actualites-footer">
+    <p>© 2025 CinéForum – Tous droits réservés</p>
+</footer>
+
+</body>
+</html>

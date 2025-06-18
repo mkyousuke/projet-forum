@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Films Populaires (TMDb) - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/API.css">
+</head>
+<body class="api-page">
+
+<header class="api-header">
+    <div class="header-content">
+        <h1>Films Populaires</h1>
+        <nav>
+            <a href="/index" class="btn btn-secondary">Accueil</a>
+        </nav>
+    </div>
+</header>
+
+<main class="api-container">
+    <div class="films-grid">
+      {{if .Results}}
+          {{range .Results}}
+            <div class="film-card">
+              <div class="film-poster">
+                  <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="Affiche de {{.Title}}" loading="lazy" onerror="this.style.display='none'">
+              </div>
+              <div class="film-content">
+                <h2 class="film-title">{{.Title}}</h2>
+                <p class="film-overview">{{.Overview}}</p>
+                {{/* Le bouton "En savoir plus" est géré par JS pour déplier le texte */}}
+                <button class="btn btn-outline btn-expand-overview">En savoir plus</button>
+              </div>
+            </div>
+          {{end}}
+      {{else}}
+        <p class="no-films">Aucun film populaire à afficher pour le moment.</p>
+      {{end}}
+    </div>
+</main>
+
+<footer class="api-footer">
+    <p>Données fournies par <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDb</a>.</p>
+    <p>© 2025 CinéForum – Tous droits réservés</p>
+</footer>
+
+<script src="/static/js/api.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inscription - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body class="register-page auth-page">
+
+  <div class="auth-container">
+      <div class="auth-card">
+          <h1 class="auth-title">Inscription</h1>
+          <p class="auth-subtitle">Rejoignez la communauté CinéForum</p>
+
+          <form class="auth-form" action="/inscription" method="post">
+
+              <div class="form-field">
+                <label for="username">Nom d’utilisateur</label>
+                <input type="text" name="username" id="username" required placeholder="Choisissez un pseudo unique">
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required placeholder="Votre adresse email">
+              </div>
+
+              <div class="form-field">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" required placeholder="Choisissez un mot de passe sécurisé">
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-submit">S’inscrire</button>
+              </div>
+
+          </form>
+
+           <div class="auth-links">
+              <a class="auth-link" href="/connexion">Déjà un compte ? Connecte-toi</a>
+              <a class="auth-link" href="/">Retour à l'accueil</a>
+          </div>
+      </div>
+  </div>
+
+</body>
+</html>

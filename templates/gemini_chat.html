@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat avec l'IA Cinéma - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css"> <link rel="stylesheet" href="/static/css/gemini.css"> </head>
+<body class="gemini-chat-page"> <div class="chat-app-container">
+    <header class="chat-header">
+      <a href="/" class="back-btn" title="Retour à l'accueil">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+      </a>
+      <div class="chat-title-container">
+        <h1>IA Cinéma</h1>
+      </div>
+      <button id="new-conversation-btn" class="btn new-chat-btn" title="Nouvelle conversation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+        <span>Nouveau</span>
+      </button>
+    </header>
+
+    <main id="chat-container" class="chat-messages-area"></main>
+
+    <footer class="chat-input-area">
+      <form id="chat-form" autocomplete="off">
+        <input
+          type="text"
+          id="message"
+          placeholder="Posez votre question à l'IA Cinéma…"
+          required
+          autofocus
+        />
+        <button type="submit" class="send-btn" title="Envoyer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3 13.0001H9V11.0001H3V1.81592C3 1.52036 3.30538 1.33188 3.57002 1.47005L22.57 11.02C22.8384 11.1598 23 11.4364 23 11.7379V12.2623C23 12.5638 22.8384 12.8404 22.57 12.9801L3.57002 22.53C3.30538 22.6682 3 22.4797 3 22.1841V13.0001Z"></path></svg>
+        </button>
+      </form>
+    </footer>
+  </div>
+  <script src="/static/js/gemini_chat.js"></script>
+</body>
+</html>

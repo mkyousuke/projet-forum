@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Modération des posts</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+  <header>
+    <h1>Modération des posts</h1>
+    <a href="/index" class="btn">Retour à l’accueil</a>
+  </header>
+
+  <main>
+    {{ if .PendingPosts }}
+      {{ range .PendingPosts }}
+        <article>
+          <h2>{{ .Title }}</h2>
+          <p>{{ .Content }}</p>
+          <form action="/moderation/approve" method="post" style="display:inline;">
+            <input type="hidden" name="post_id" value="{{ .ID }}">
+            <button type="submit" class="btn">✅ Approuver</button>
+          </form>
+          <form action="/moderation/reject" method="post" style="display:inline; margin-left:1rem;">
+            <input type="hidden" name="post_id" value="{{ .ID }}">
+            <button type="submit" class="btn">❌ Rejeter</button>
+          </form>
+        </article>
+      {{ end }}
+    {{ else }}
+      <p>Aucun post en attente de validation.</p>
+    {{ end }}
+  </main>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{{/* templates/admin_users.html */}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Admin – Gestion des utilisateurs</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <style>
+    td form {
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    td button {
+        padding: 4px 9px; /* Ajustement padding */
+        font-size: 0.85rem;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #555; /* Bordure par défaut pour contraste */
+        background-color: #444; /* Fond par défaut */
+        color: #fff; /* Texte blanc par défaut */
+        line-height: 1.4; /* Assurer hauteur ligne suffisante */
+    }
+    button[type="submit"]:hover {
+       filter: brightness(1.2); /* Effet hover simple */
+    }
+    .btn-promote {
+        background-color: #2ecc71 !important;
+        border-color: #27ae60 !important;
+        color: #fff !important;
+    }
+    .btn-demote {
+        background-color: #f39c12 !important;
+        border-color: #e67e22 !important;
+        color: #fff !important;
+    }
+    .btn-delete {
+        background-color: #e74c3c !important;
+        color: #fff !important;
+        border-color: #c0392b !important;
+        margin-left: 10px;
+    }
+    header nav a.btn { margin: 0 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dashboard Admin</h1>
+    <p>Connecté en tant que : {{.Admin.Username}} (ID: {{.Admin.ID}}, Rôle: {{.Admin.Role}})</p>
+    <nav>
+        <a href="/index" class="btn">← Accueil</a>
+        <a href="/profil" class="btn">Mon Profil</a>
+        {{if eq .Admin.Role "admin"}}
+          <a href="/moderation" class="btn">Modération Posts</a>
+        {{end}}
+    </nav>
+  </header>
+
+  <main>
+    <h2>Gestion des utilisateurs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Utilisateur</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .Users}}
+        <tr>
+          <td>{{.ID}}</td>
+          <td><a href="/profil?id={{.ID}}" title="Voir profil">{{.Username}}</a></td>
+          <td>{{.Email}}</td>
+          <td>{{.Role}}</td>
+          <td>
+            {{/* --- Actions Promote/Demote --- */}}
+            {{if eq .Role "user"}}
+              <form action="/admin/users/update" method="post">
+                <input type="hidden" name="user_id" value="{{.ID}}">
+                <input type="hidden" name="action" value="promote">
+                <button type="submit" class="btn-promote" title="Promouvoir en Modérateur">Promouvoir</button> {{/* Classe ajoutée */}}
+              </form>
+            {{else if eq .Role "moderator"}}
+              <form action="/admin/users/update" method="post">
+                <input type="hidden" name="user_id" value="{{.ID}}">
+                <input type="hidden" name="action" value="demote">
+                <button type="submit" class="btn-demote" title="Rétrograder en Utilisateur">Rétrograder</button> {{/* Classe ajoutée */}}
+              </form>
+            {{else if eq .Role "admin"}}
+              <span>(Admin)</span>
+            {{else}}
+              <span>-</span>
+            {{end}}
+
+            {{/* --- Action Delete --- */}}
+            {{if ne .Role "admin"}}
+              <form action="/admin/users/update" method="post" onsubmit="return confirm('ATTENTION ! \nÊtes-vous sûr de vouloir supprimer DÉFINITIVEMENT l\'utilisateur \'{{js .Username}}\' (ID: {{.ID}}) ainsi que TOUS ses posts, commentaires et likes ? \n\nCette action est IRRÉVERSIBLE.');">
+                  <input type="hidden" name="user_id" value="{{.ID}}">
+                  <input type="hidden" name="action" value="delete">
+                  <button type="submit" class="btn-delete" title="Supprimer DÉFINITIVEMENT l'utilisateur et son contenu">Supprimer</button> {{/* Classe déjà présente */}}
+              </form>
+            {{end}}
+          </td>
+        </tr>
+        {{else}}
+          <tr>
+            <td colspan="5">Aucun autre utilisateur à gérer.</td>
+          </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

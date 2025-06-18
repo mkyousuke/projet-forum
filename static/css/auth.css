@@ -1,0 +1,192 @@
+@import url('/static/css/main.css');
+
+body.auth-page {
+    background: url('/static/images/background.jpg.webp') center/cover fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--spacing, 1.5rem);
+    color: #fff;
+}
+
+.auth-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-card {
+    background: rgba(42, 42, 62, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: var(--spacing-lg, 2rem) clamp(1.5rem, 5vw, 2.5rem);
+    border-radius: var(--radius, 8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.auth-title {
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-size: clamp(1.8rem, 1.5rem + 1vw, 2.2rem);
+    font-weight: 600;
+}
+.auth-subtitle {
+    margin-bottom: 2rem;
+    color: var(--text-light, #ccc);
+    font-size: 1rem;
+}
+
+.auth-form {
+    text-align: left;
+}
+.form-field {
+    margin-bottom: 1.25rem;
+}
+.auth-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-light, #eee);
+}
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm, 6px);
+    background-color: rgba(30, 30, 47, 0.7);
+    color: var(--text-dark, #fff);
+    font-size: 1rem;
+    font-family: inherit;
+    line-height: 1.5;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.auth-form input[type="text"]::placeholder,
+.auth-form input[type="email"]::placeholder,
+.auth-form input[type="password"]::placeholder {
+    color: var(--text-placeholder, #8e8e9e);
+    opacity: 0.8;
+}
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary, #e74c3c);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
+}
+
+.form-actions {
+    margin-top: 1.8rem;
+}
+.auth-form .btn-submit {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff !important;
+}
+.auth-form .btn-submit:hover {
+     background-color: var(--accent);
+     border-color: var(--accent);
+}
+
+.auth-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.auth-separator::before,
+.auth-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.auth-separator span {
+    padding: 0 1rem;
+}
+
+.oauth-container {
+    margin-top: 1.5rem;
+}
+.oauth-title {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-light, #ccc);
+}
+.oauth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.oauth-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.oauth-btn img {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+}
+.oauth-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-links {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+.auth-link {
+    color: var(--text-light, #ccc) !important;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+.auth-link:hover {
+    color: var(--primary, #e74c3c) !important;
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+    .auth-title {
+        font-size: 1.6rem;
+    }
+     .oauth-buttons {
+        gap: 0.8rem;
+    }
+    .oauth-btn {
+        width: 44px;
+        height: 44px;
+    }
+    .oauth-btn img {
+        height: 22px;
+    }
+}

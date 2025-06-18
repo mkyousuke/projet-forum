@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Post.Title }} - CinéForum</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/post_detail.css">
+</head>
+<body class="post-detail-page">
+
+<header class="post-detail-header">
+   <div class="header-content">
+        <a href="/posts" class="btn btn-secondary" title="Retour aux discussions">&larr; Discussions</a>
+        <h1>{{ .Post.Title }}</h1>
+        <nav>
+            <a href="/index" class="btn btn-outline">Accueil</a>
+       </nav>
+   </div>
+</header>
+
+<main class="post-detail-container">
+  <article class="post-card">
+    <header class="post-card-header">
+        <div class="author-info">
+             <img class="author-avatar"
+               src="/static/images/profil/{{ .AuthorPhoto }}"
+               alt="Avatar de {{ .Post.Username }}"
+               onerror="this.onerror=null; this.src='/static/images/profil/default.png';">
+            <div class="author-details">
+                <a href="/profil?id={{ .Post.UserID }}" class="author-name">{{ .Post.Username }}</a>
+                <span class="post-timestamp" title="{{ .Post.CreatedAt.Format "02/01/2006 15:04:05" }}">
+                    Publié le {{ .Post.CreatedAt.Format "02 Jan 2006 à 15:04" }}
+                </span>
+            </div>
+        </div>
+         {{ if .Post.Categories }}
+        <div class="post-categories">
+            {{ range $i, $c := .Post.Categories }}
+                <span class="category-badge">{{ $c }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+    </header>
+
+    <section class="post-card-content">
+        {{ if .Post.ImagePath }}
+            <img src="/{{ .Post.ImagePath }}" alt="Image du post" class="post-image">
+        {{ end }}
+
+        <div class="post-text-content">
+             {{ if .Modified }}
+                <div class="modified-notice">
+                    <p><strong>(Modifié le : {{ .Post.ModifiedAt.Format "02/01/2006 15:04:05" }})</strong></p>
+                    <details>
+                        <summary>Voir l'ancienne version</summary>
+                        <p class="original-content"><em>{{ .Post.OriginalContent }}</em></p>
+                    </details>
+                </div>
+                <p>{{ .Post.Content }}</p>
+            {{ else }}
+                <p>{{ .Post.Content }}</p>
+            {{ end }}
+        </div>
+    </section>
+
+    <footer class="post-card-footer">
+        <div class="post-interactions">
+            <form action="/like-post" method="post" class="interaction-form">
+              <input type="hidden" name="post_id" value="{{ .Post.ID }}">
+              <button type="submit" class="btn-like-dislike" title="Aimer">
+                  <img src="/static/images/like.png" alt="Like">
+                  <span class="count">{{ .Post.Likes }}</span>
+              </button>
+            </form>
+            <form action="/dislike-post" method="post" class="interaction-form">
+              <input type="hidden" name="post_id" value="{{ .Post.ID }}">
+              <button type="submit" class="btn-like-dislike" title="Ne pas aimer">
+                   <img src="/static/images/dislike.png" alt="Dislike">
+                   <span class="count">{{ .Post.Dislikes }}</span>
+              </button>
+            </form>
+        </div>
+        <div class="post-management">
+            <form action="/report-post" method="post" class="interaction-form">
+              <input type="hidden" name="post_id" value="{{ .Post.ID }}">
+              <button type="submit" class="btn btn-report" onclick="return confirm('Voulez-vous signaler ce post ?');">
+                  Signaler
+              </button>
+            </form>
+             {{ if .Editable }}
+                <a href="/edit-post?id={{ .Post.ID }}" class="btn btn-edit">Modifier</a>
+                <a href="/delete-post?id={{ .Post.ID }}" class="btn btn-delete-post" onclick="return confirm('Supprimer ce post ?');">Supprimer</a>
+             {{ end }}
+        </div>
+    </footer>
+  </article>
+
+  <section class="comments-area">
+    <h2>Commentaires ({{ len .Comments }})</h2>
+
+    <div class="add-comment-form-container">
+        <form action="/add-comment" method="post" class="add-comment-form">
+          <input type="hidden" name="post_id" value="{{ .Post.ID }}">
+          <textarea name="content" rows="3" placeholder="Ajouter un commentaire..." required></textarea>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+
+    <div class="comment-list">
+        {{ range .Comments }}
+          <div class="comment-card">
+            <div class="comment-header">
+                <img class="commenter-avatar"
+                     src="/static/images/profil/{{ .Photo }}"
+                     alt="Avatar de {{ .Username }}"
+                     onerror="this.onerror=null; this.src='/static/images/profil/default.png';">
+                 <div class="commenter-info">
+                    <a href="/profil?id={{ .UserID }}" class="commenter-name">{{ .Username }}</a>
+                    <span class="comment-timestamp" title="{{ .CreatedAt.Format "02/01/2006 15:04:05"}}">
+                         {{ .CreatedAt.Format "02 Jan 06 à 15:04" }}
+                    </span>
+                 </div>
+                 <a href="/delete-comment?id={{ .ID }}&post_id={{ $.Post.ID }}"
+                     class="btn btn-delete-comment"
+                     title="Supprimer le commentaire"
+                     onclick="return confirm('Supprimer ce commentaire ?');">
+                     &times;
+                 </a>
+            </div>
+            <div class="comment-content">
+              <p>{{ .Content }}</p>
+            </div>
+            <div class="comment-actions">
+                 <form action="/like-comment" method="post" class="interaction-form">
+                    <input type="hidden" name="comment_id" value="{{ .ID }}">
+                    <input type="hidden" name="post_id" value="{{ $.Post.ID }}">
+                    <button type="submit" class="btn-like-dislike btn-comment-like" title="Aimer">
+                        <img src="/static/images/like.png" alt="Like">
+                        <span class="count">{{ .Likes }}</span>
+                    </button>
+                  </form>
+                  <form action="/dislike-comment" method="post" class="interaction-form">
+                    <input type="hidden" name="comment_id" value="{{ .ID }}">
+                    <input type="hidden" name="post_id" value="{{ $.Post.ID }}">
+                    <button type="submit" class="btn-like-dislike btn-comment-dislike" title="Ne pas aimer">
+                        <img src="/static/images/dislike.png" alt="Dislike">
+                        <span class="count">{{ .Dislikes }}</span>
+                    </button>
+                  </form>
+            </div>
+          </div>
+        {{ else }}
+            <p class="no-comments">Soyez le premier à commenter !</p>
+        {{ end }}
+    </div>
+  </section>
+
+</main>
+
+<footer class="post-detail-footer">
+  <p>© 2025 CinéForum – Tous droits réservés</p>
+</footer>
+
+</body>
+</html>

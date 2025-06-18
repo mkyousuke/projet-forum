@@ -1,0 +1,207 @@
+@import url('/static/css/main.css');
+
+body, main, header, h1, h2, p, th, td, label, input {
+    color: #fff;
+}
+main a, header nav a.btn {
+  color: var(--secondary, #e74c3c) !important;
+  text-decoration: none;
+}
+main a:hover, header nav a.btn:hover {
+  text-decoration: underline;
+}
+header nav a.btn {
+    color: #fff !important;
+}
+
+
+header {
+  text-align: center;
+  padding: var(--spacing, 1.5rem) 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+header h1 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.5rem);
+}
+header p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-light, #ddd);
+}
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+header nav a.btn {
+    margin: 0.25rem;
+}
+
+main {
+  width: min(100% - 2rem, 1000px);
+  margin: 2rem auto;
+  padding: var(--spacing, 1.5rem);
+  background: rgba(30, 30, 47, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius, 8px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+main h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--primary, #e74c3c);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing, 1.5rem);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+thead th {
+  background-color: var(--primary, #e74c3c);
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--secondary, #c0392b);
+}
+
+tbody tr {
+    background-color: rgba(255, 255, 255, 0.03);
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td:last-child {
+    white-space: nowrap;
+}
+
+td form {
+  display: inline-block;
+  margin: 0 3px;
+  vertical-align: middle;
+  padding: 0;
+}
+
+td button {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm, 6px);
+    border: 1px solid #555;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    vertical-align: middle;
+    background-color: #444;
+    color: #fff;
+    line-height: 1.4;
+    opacity: 1;
+    visibility: visible;
+    text-indent: 0;
+    text-shadow: none;
+    position: relative;
+    z-index: 1;
+}
+td button:hover {
+    filter: brightness(1.2);
+}
+
+.btn-promote,
+.btn-demote,
+.btn-delete {
+    color: #000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-indent: 0 !important;
+    text-shadow: none !important;
+    background-clip: padding-box;
+}
+
+
+.btn-promote {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+}
+.btn-promote:hover {
+    background-color: #27ae60;
+    filter: brightness(1.1);
+}
+
+.btn-demote {
+    background-color: #f39c12;
+    border-color: #e67e22;
+}
+.btn-demote:hover {
+    background-color: #e67e22;
+     filter: brightness(1.1);
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    border-color: #c0392b;
+    margin-left: 10px;
+}
+.btn-delete:hover {
+    background-color: #c0392b;
+    filter: brightness(1.1);
+}
+
+td span {
+    color: var(--text-light, #ccc);
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    main {
+      width: min(100% - 1rem, 1000px);
+      margin: 1rem auto;
+      padding: 1rem;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    th, td {
+        white-space: nowrap;
+        padding: 0.75rem;
+    }
+     td:last-child {
+        min-width: 220px;
+    }
+}
